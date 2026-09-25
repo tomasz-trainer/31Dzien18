@@ -54,18 +54,7 @@ namespace P12MAUI.Client.ViewModels
 
       
 
-        private async Task updateProductAsync()
-        {
-            var result = await _productService.UpdateProductAsync(_selectedProduct);
-            if (result.Success)
-            {
-                await LoadProductsAsync();
-            }
-            else
-            {
-                _errorMessage = "Error updating product: " + result.Message;
-            }
-        }
+    
 
         [RelayCommand]
         public async Task DeleteProductAsync()
