@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="P03WeatherForecastWPF.Client/P03WeatherForecastWPF.Client.csproj" />
+  <Project Path="P05Shop.API/P05Shop.API.csproj" />
+  <Project Path="P06Shop.Shared/P06Shop.Shared.csproj" />
+  <Project Path="P07Shop.DataSeeder/P07Shop.DataSeeder.csproj" />
+  <Project Path="P12MAUI.Client/P12MAUI.Client.csproj" Id="7b1f8e71-b17a-4bfc-91f6-e74e85fb0495">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

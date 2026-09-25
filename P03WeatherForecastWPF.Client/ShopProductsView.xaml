@@ -1,0 +1,29 @@
+﻿<Window x:Class="P03WeatherForecastWPF.Client.ShopProductsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P03WeatherForecastWPF.Client"
+        mc:Ignorable="d"
+        Title="ShopProductsView" Height="450" Width="800">
+    <StackPanel>
+        <Label Content="{Binding ErrorMessage}" Background="Red" Visibility="Collapsed"></Label>
+        <Button Content="New product" Command="{Binding NewProductWindowCommand}"></Button>
+        <ListView ItemsSource="{Binding Products}">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Label Content="{Binding Title}"></Label>
+                        <Label Content="{Binding Description}"></Label>
+                        <Button Content="Edit" 
+                                Command="{Binding DataContext.ShowProductDetailsCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"></Button>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate> 
+            
+            
+        </ListView>
+    </StackPanel>
+    
+</Window>

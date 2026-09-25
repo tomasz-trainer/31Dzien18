@@ -1,0 +1,8 @@
+@P05Shop.API_HostAddress = http://localhost:5008
+
+GET {{P05Shop.API_HostAddress}}/api/weatherforecast/
+Accept: application/json
+
+
+
+###
