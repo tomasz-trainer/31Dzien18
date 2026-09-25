@@ -52,7 +52,9 @@ namespace P12MAUI.Client
         {
             services.AddSingleton<IProductService, ProductService>(); // rejestracja serwisu jako singleton
             services.AddSingleton<IMeesageDialogService, MauiMessageDialogService>(); // rejestracja serwisu jako singleton
-
+            services.AddSingleton<IConnectivity>(Connectivity.Current);
+            services.AddSingleton<IGeolocation>(Geolocation.Default);
+            services.AddSingleton<IMap>(Map.Default);
         }
 
         private static void ConfigureHttpClients(IServiceCollection services)

@@ -16,6 +16,9 @@ namespace P12MAUI.Client.ViewModels
         private readonly IProductService _productService;
         private readonly ProductDetailsView _productDetailsView;
         private readonly IMeesageDialogService _messageDialogService;
+        private readonly IConnectivity _connectivity;
+        private readonly IGeolocation _geolocation;
+        private readonly IMap _map;
 
         [ObservableProperty]
         private ObservableCollection<Product> _products;
@@ -26,17 +29,32 @@ namespace P12MAUI.Client.ViewModels
         [ObservableProperty]
         private string _errorMessage;
 
-        public ProductsViewModel(IProductService productService, ProductDetailsView productDetailsView, IMeesageDialogService meesageDialogService)
+        public ProductsViewModel(IProductService productService,
+            ProductDetailsView productDetailsView, 
+            IMeesageDialogService meesageDialogService,
+            IConnectivity connectivity,
+            IGeolocation geolocation,
+            IMap map
+            )
         {
             _productService = productService;
             _productDetailsView = productDetailsView;
             _messageDialogService = meesageDialogService;
+            _connectivity = connectivity;
 
             LoadProductsAsync();
         }
 
         public async Task LoadProductsAsync()
         {
+            if(_connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                ErrorMessage = "No internet connection. Please check your network settings.";
+                _messageDialogService.ShowMessage(ErrorMessage);
+                Products = new ObservableCollection<Product>();
+                return;
+            }
+
             var response = await _productService.GetProductsAsync();
             if (response.Success && response.Data != null)
             {
@@ -81,7 +99,37 @@ namespace P12MAUI.Client.ViewModels
             }
         }
 
-       
+        [RelayCommand]
+        public async Task ShowMyLocationAsync()
+        {
+            try
+            {
+                var location = await _geolocation.GetLastKnownLocationAsync();
+                if (location == null)
+                {
+                    location = await _geolocation.GetLocationAsync(new GeolocationRequest
+                    {
+                        DesiredAccuracy = GeolocationAccuracy.Medium,
+                        Timeout = TimeSpan.FromSeconds(30)
+                    });
+                }
+                if (location != null)
+                {
+                    var options = new MapLaunchOptions { Name = "My Location" };
+                    await _map.OpenAsync(location, options);
+                }
+                else
+                {
+                    ErrorMessage = "Unable to get location.";
+                    _messageDialogService.ShowMessage(ErrorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Error getting location: {ex.Message}";
+                _messageDialogService.ShowMessage(ErrorMessage);
+            }
+        }
 
 
     }

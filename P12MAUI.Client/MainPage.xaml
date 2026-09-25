@@ -8,20 +8,38 @@
     <ScrollView>
 
         <VerticalStackLayout>
+            <Button Text="Show map" Command="{Binding ShowMyLocationCommand}"></Button>
+            <Label Text="{Binding ErrorMessage}"></Label>
             <Button Text="New product" Command="{Binding NewProductWindowCommand}"></Button>
 
             <CollectionView ItemsSource="{Binding Products}">
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Title}"></Label>
-                            <Label Text="{Binding Description}"></Label>
-                            <Button Grid.Row="3"
-                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProductsViewModel}}, Path=ShowProductDetailsCommand }" 
-                      CommandParameter="{Binding}"
-                      Text="Edit"></Button> 
-                        </VerticalStackLayout>
+
+                        <Border Padding="10" Margin="0,5">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProductsViewModel}}, Path=ShowProductDetailsCommand }" 
+                                    CommandParameter="{Binding}"
+                                   />
+
+                            </Border.GestureRecognizers>
+                            
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Title}"></Label>
+                                <Label Text="{Binding Description}"></Label>
+                                <!--<Button Grid.Row="3"
+Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProductsViewModel}}, Path=ShowProductDetailsCommand }" 
+CommandParameter="{Binding}"
+Text="Edit"></Button>-->
+                            </VerticalStackLayout>
+
+                        </Border>
+                        
+                        
+                  
+                    
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
