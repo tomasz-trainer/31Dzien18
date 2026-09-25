@@ -31,6 +31,8 @@ namespace P12MAUI.Client.ViewModels
             _productService = productService;
             _productDetailsView = productDetailsView;
             _messageDialogService = meesageDialogService;
+
+            LoadProductsAsync();
         }
 
         public async Task LoadProductsAsync()
