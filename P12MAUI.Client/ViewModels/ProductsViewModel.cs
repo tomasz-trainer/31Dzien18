@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using P06Shop.Shared;
+using P06Shop.Shared.Services.CategoryService;
 using P06Shop.Shared.Services.ProductService;
 using P12MAUI.Client;
 using System;
@@ -14,6 +15,7 @@ namespace P12MAUI.Client.ViewModels
     {
 
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
         private readonly ProductDetailsView _productDetailsView;
         private readonly IMeesageDialogService _messageDialogService;
         private readonly IConnectivity _connectivity;
@@ -29,7 +31,21 @@ namespace P12MAUI.Client.ViewModels
         [ObservableProperty]
         private string _errorMessage;
 
+        [ObservableProperty]
+        private ObservableCollection<ProductListItem> _productItems = new();
+
+        [ObservableProperty]
+        private ObservableCollection<Category> _filterCategories = new();
+
+        [ObservableProperty]
+        private Category? _selectedFilterCategory;
+
+        private List<Category> _categories = new();
+
+        private static readonly Category AllCategories = new Category { Id = 0, Name = "All" };
+
         public ProductsViewModel(IProductService productService,
+            ICategoryService categoryService,
             ProductDetailsView productDetailsView, 
             IMeesageDialogService meesageDialogService,
             IConnectivity connectivity,
@@ -38,6 +54,7 @@ namespace P12MAUI.Client.ViewModels
             )
         {
             _productService = productService;
+            _categoryService = categoryService;
             _productDetailsView = productDetailsView;
             _messageDialogService = meesageDialogService;
             _connectivity = connectivity;
@@ -55,11 +72,14 @@ namespace P12MAUI.Client.ViewModels
                 return;
             }
 
+            await LoadCategoriesAsync();
+
             var response = await _productService.GetProductsAsync();
             if (response.Success && response.Data != null)
             {
                 
                 Products = new ObservableCollection<Product>(response.Data);
+                ApplyCategoryFilter();
             }
             else
             {
@@ -70,6 +90,58 @@ namespace P12MAUI.Client.ViewModels
 
       
           
+
+        private async Task LoadCategoriesAsync()
+        {
+            var response = await _categoryService.GetCategoriesAsync();
+            if (!response.Success || response.Data == null)
+            {
+                _messageDialogService.ShowMessage("Error loading categories: " + response.Message);
+                return;
+            }
+
+            _categories = response.Data;
+
+            var selectedId = SelectedFilterCategory?.Id ?? 0;
+            var filterCategories = new ObservableCollection<Category> { AllCategories };
+            foreach (var category in _categories)
+            {
+                filterCategories.Add(category);
+            }
+            FilterCategories = filterCategories;
+            SelectedFilterCategory = FilterCategories.FirstOrDefault(c => c.Id == selectedId) ?? AllCategories;
+        }
+
+        partial void OnSelectedFilterCategoryChanged(Category? value)
+        {
+            ApplyCategoryFilter();
+        }
+
+        private void ApplyCategoryFilter()
+        {
+            if (Products == null)
+            {
+                ProductItems = new ObservableCollection<ProductListItem>();
+                return;
+            }
+
+            var categoryId = SelectedFilterCategory?.Id ?? 0;
+            var filtered = categoryId == 0
+                ? Products
+                : Products.Where(p => p.CategoryId == categoryId);
+
+            ProductItems = new ObservableCollection<ProductListItem>(
+                filtered.Select(p => new ProductListItem(p, GetCategoryName(p.CategoryId))));
+        }
+
+        private string GetCategoryName(int? categoryId)
+        {
+            if (categoryId == null)
+            {
+                return "No category";
+            }
+            return _categories.FirstOrDefault(c => c.Id == categoryId)?.Name ?? "No category";
+        }
 
         [RelayCommand]
         public async Task NewProductWindow()

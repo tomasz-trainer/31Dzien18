@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="P12MAUI.Client.ProductDetailsView"
@@ -34,6 +34,14 @@
 
 
         </Grid>
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="Category:" VerticalOptions="Center" />
+            <Picker ItemsSource="{Binding Categories}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedCategory}"
+                    WidthRequest="220" />
+            <Button Text="+" Command="{Binding AddCategoryCommand}" />
+        </HorizontalStackLayout>
         <HorizontalStackLayout>
             <Button Text="Save" Command="{Binding SaveCommand}"></Button>
             <Button Text="Delete" Command="{Binding DeleteCommand}"></Button>

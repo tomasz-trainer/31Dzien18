@@ -1,7 +1,8 @@
-
+﻿
 using Microsoft.EntityFrameworkCore;
 using P05Shop.API.Models;
 using P05Shop.API.Services;
+using P06Shop.Shared.Services.CategoryService;
 using P06Shop.Shared.Services.ProductService;
 using P06Shop.Shared.Services.WeatherSeervice;
 
@@ -29,6 +30,7 @@ namespace P05Shop.API
 
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IMeteoService, MeteoService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             // addScoped - oznacza, że w trakcie jednego requestu będzie istniała tylko jedna instancja klasy ProductService
             // addTransient - oznacza, że obiekt będzie tworzony za każdym razem, gdy odwolujemy się do niego

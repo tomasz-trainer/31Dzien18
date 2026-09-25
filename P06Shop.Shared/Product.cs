@@ -33,5 +33,7 @@ namespace P06Shop.Shared
         public double Price { get; set; }
 
         public DateTime ReleaseDate { get; set; }
+
+        public int? CategoryId { get; set; }
     }
 }

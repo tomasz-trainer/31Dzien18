@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using P03WeatherForecastWPF.Client.Services;
 using P06Shop.Shared;
+using P06Shop.Shared.Services.CategoryService;
 using P06Shop.Shared.Services.ProductService;
 using P12MAUI.Client.MessageBox;
 using P12MAUI.Client.ViewModels;
@@ -63,6 +64,12 @@ namespace P12MAUI.Client
                 .ConfigureHttpClient(client =>
                 {
                     client.BaseAddress = new Uri("https://localhost:7127"); // ustawienie adresu bazowego dla klienta HTTP
+                });
+
+            services.AddHttpClient<ICategoryService, CategoryService>()
+                .ConfigureHttpClient(client =>
+                {
+                    client.BaseAddress = new Uri("https://localhost:7127");
                 });
         }
     }
