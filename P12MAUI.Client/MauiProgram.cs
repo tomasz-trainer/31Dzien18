@@ -45,6 +45,7 @@ namespace P12MAUI.Client
         private static void ConfigureViewModels(IServiceCollection services)
         {
             services.AddSingleton<ProductsViewModel>(); // rejestracja MainViewModel jako singleton
+            services.AddSingleton<ProductDetailsViewModel>(); // rejestracja ProductDetailsViewModel jako singleton
         }
 
         private static void ConfigureAppServices(IServiceCollection services)

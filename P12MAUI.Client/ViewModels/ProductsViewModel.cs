@@ -51,29 +51,7 @@ namespace P12MAUI.Client.ViewModels
         }
 
       
-
-      
-
-    
-
-        [RelayCommand]
-        public async Task DeleteProductAsync()
-        {
-            if (_selectedProduct == null)
-            {
-                _errorMessage = "No product selected for deletion.";
-                return;
-            }
-            var result = await _productService.DeleteProductAsync(_selectedProduct.Id);
-            if (result.Success)
-            {
-                await LoadProductsAsync();
-            }
-            else
-            {
-                _errorMessage = "Error deleting product: " + result.Message;
-            }
-        }
+          
 
         [RelayCommand]
         public async Task NewProductWindow()
@@ -85,23 +63,7 @@ namespace P12MAUI.Client.ViewModels
             //SelectedProduct = new Product(); // Initialize a new product for creation
         }
 
-        [RelayCommand]
-        public async Task SaveProductAsync()
-        {
-            if (_selectedProduct == null)
-            {
-                _errorMessage = "No product selected for saving.";
-                return;
-            }
-            if (_selectedProduct.Id == 0)
-            {
-                await createProductAsync();
-            }
-            else
-            {
-                await updateProductAsync();
-            }
-        }
+        
 
         [RelayCommand]
         public async Task ShowProductDetails(Product product)

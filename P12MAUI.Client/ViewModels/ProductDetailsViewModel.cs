@@ -14,7 +14,14 @@ namespace P12MAUI.Client.ViewModels
     {
         private readonly IProductService _productService;
         private readonly IMeesageDialogService _messageDialogService;
-        private readonly ProductsViewModel _productsViewModel;
+        
+        private ProductsViewModel _productsViewModel;
+
+        public ProductsViewModel ProductsViewModel
+        {
+            get => _productsViewModel;
+            set => _productsViewModel = value;
+        }
 
         [ObservableProperty]
         private Product _product;
@@ -63,6 +70,27 @@ namespace P12MAUI.Client.ViewModels
             else
             {
                 _messageDialogService.ShowMessage("Error creating product: " + result.Message);
+            }
+        }
+
+
+        [RelayCommand]
+        public async Task DeleteAsync()
+        {
+            if (_product == null)
+            {
+                var errorMessage = "No product selected for deletion.";
+                _messageDialogService.ShowMessage(errorMessage);
+                return;
+            }
+            var result = await _productService.DeleteProductAsync(_product.Id);
+            if (result.Success)
+            {
+                await _productsViewModel.LoadProductsAsync();
+            }
+            else
+            {
+                _messageDialogService.ShowMessage("Error deleting product: " + result.Message);
             }
         }
     }
