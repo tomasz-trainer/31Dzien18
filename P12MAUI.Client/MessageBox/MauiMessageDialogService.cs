@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace P03WeatherForecastWPF.Client.MessageBox
+namespace P12MAUI.Client.MessageBox
 {
     internal class MauiMessageDialogService : IMeesageDialogService
     {
