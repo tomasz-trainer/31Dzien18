@@ -41,7 +41,7 @@ namespace P12MAUI.Client.ViewModels
             _productDetailsView = productDetailsView;
             _messageDialogService = meesageDialogService;
             _connectivity = connectivity;
-
+            _geolocation = geolocation;
             LoadProductsAsync();
         }
 
@@ -115,8 +115,12 @@ namespace P12MAUI.Client.ViewModels
                 }
                 if (location != null)
                 {
-                    var options = new MapLaunchOptions { Name = "My Location" };
-                    await _map.OpenAsync(location, options);
+                    var uri = new Uri($"https://www.google.com/maps?q={location.Latitude},{location.Longitude}");
+                    await Launcher.OpenAsync(uri);
+
+
+                    //var options = new MapLaunchOptions { Name = "My Location" };
+                    //await _map.OpenAsync(location, options);
                 }
                 else
                 {
