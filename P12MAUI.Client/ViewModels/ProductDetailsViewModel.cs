@@ -44,7 +44,8 @@ namespace P12MAUI.Client.ViewModels
             {
                 await createProductAsync();
             }
-             
+            await Shell.Current.GoToAsync(".."); // Navigate back to the previous page
+
         }
 
         private async Task createProductAsync()
@@ -53,6 +54,7 @@ namespace P12MAUI.Client.ViewModels
             if (result.Success)
             {
                 await _productsViewModel.LoadProductsAsync();
+             
             }
             else
             {
@@ -66,6 +68,7 @@ namespace P12MAUI.Client.ViewModels
             if (result.Success)
             {
                 await _productsViewModel.LoadProductsAsync();
+              
             }
             else
             {
@@ -87,6 +90,7 @@ namespace P12MAUI.Client.ViewModels
             if (result.Success)
             {
                 await _productsViewModel.LoadProductsAsync();
+                
             }
             else
             {
