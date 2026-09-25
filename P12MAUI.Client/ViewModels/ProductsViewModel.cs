@@ -56,11 +56,14 @@ namespace P12MAUI.Client.ViewModels
         [RelayCommand]
         public async Task NewProductWindow()
         {
-            //_messageDialogService.ShowMessage("Creating a new product.");
-            //_productDetailsView.Show();
+            _selectedProduct = new Product(); // Create a new product instance
+            _selectedProduct.ReleaseDate = DateTime.Now; // Set the default release date to now
 
-            //_productDetailsView.DataContext = this;
-            //SelectedProduct = new Product(); // Initialize a new product for creation
+            await Shell.Current.GoToAsync(nameof(ProductDetailsView), new Dictionary<string, object>
+                 {
+                     { nameof(Product), SelectedProduct},
+                     { nameof(ProductsViewModel), this }
+                 });
         }
 
         
