@@ -52,21 +52,7 @@ namespace P12MAUI.Client.ViewModels
 
       
 
-        private async Task createProductAsync()
-        {
-            var result = await _productService.CreateProductAsync(_selectedProduct);
-            if (result.Success)
-            {
-                await LoadProductsAsync();
-            }
-            else
-            {
-                _errorMessage = "Error creating product: " + result.Message;
-                _messageDialogService.ShowMessage("Error creating product: " + result.Message);
-
-
-            }
-        }
+      
 
         private async Task updateProductAsync()
         {
@@ -133,9 +119,11 @@ namespace P12MAUI.Client.ViewModels
         {
             if (product != null)
             {
-                //SelectedProduct = product;
-                //_productDetailsView.DataContext = this;
-                //_productDetailsView.Show();
+                await Shell.Current.GoToAsync(nameof(ProductDetailsView), new Dictionary<string, object>
+                 {
+                     { nameof(Product), product},
+                     { nameof(ProductsViewModel), this }
+                 });
             }
         }
 
