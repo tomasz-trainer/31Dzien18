@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="P12MAUI.Client.MainPage">
+             x:Class="P12MAUI.Client.MainPage"
+             xmlns:viewmodel="clr-namespace:P12MAUI.Client.ViewModels"
+             >
 
     <ScrollView>
 
@@ -15,8 +17,10 @@
                         <VerticalStackLayout>
                             <Label Text="{Binding Title}"></Label>
                             <Label Text="{Binding Description}"></Label>
-                            <!--<Button Text="Edit" 
-                Command="{Binding DataContext.ShowProductDetailsCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"></Button>-->
+                            <Button Grid.Row="3"
+                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProductsViewModel}}, Path=ShowProductDetailsCommand }" 
+                      CommandParameter="{Binding}"
+                      Text="Edit"></Button> 
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
