@@ -1,0 +1,17 @@
+WPF -> windows -> (UI xaml + MVVM )
+.NET razor -> web 
+Blazor -> web 
+MAUI -> andorid, ios, windows (UI xaml + MVVM)
+
+
+MAUI -> uruchamianie:
+
+ - emulator android 
+ - wirtualizacja windows 
+ - podlaczenie kabelka usb 
+
+1) 1) 7x klikamy w numer kompilacji na telefonie az dostaenimy komuniakt: jestes programista 
+
+   2)  ustawienia - system - debugowanie usb i zezwalaj na nieznane zrodla 
+ 
+dotnet publish -f net10.0-android -c Release

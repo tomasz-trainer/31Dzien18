@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="polecenia.txt" />
+  </Folder>
   <Project Path="P03WeatherForecastWPF.Client/P03WeatherForecastWPF.Client.csproj" />
   <Project Path="P05Shop.API/P05Shop.API.csproj" />
   <Project Path="P06Shop.Shared/P06Shop.Shared.csproj" />
